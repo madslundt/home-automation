@@ -1,18 +1,24 @@
 version: "3"
 services:
     api:
-        build: ./Src
+        build: .
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
         ports:
             - "8080:80"
+        networks:
+            - sonos
         depends_on:
             - sonosApi
     sonosApi:
         image: "chrisns/docker-node-sonos-http-api"
-        network_mode: "host"
+        networks:
+            - sonos
         volumes:
             - ./sonosApi/settings:/app/settings
             - ./sonosApi/presets:/app/presets
             - ./sonosApi/cache:/app/cache
             - ./sonosApi/clips:/app/static/clips
+
+networks:
+    sonos:
