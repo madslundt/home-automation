@@ -32,3 +32,4 @@ msbuild.wrn
 .vs/
 
 appsettings.[Dd]evelopment.json
+appsettings.[Pp]roduction.json
