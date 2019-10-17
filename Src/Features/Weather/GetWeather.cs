@@ -87,7 +87,8 @@ namespace Src.Features.Weather
 
             private Weather GetWeatherData(DataBlock dataBlock)
             {
-                var upcoming = dataBlock.Data.FirstOrDefault(d => d.Icon.ToString() == dataBlock.Icon.ToString());
+                var now = DateTime.Now;
+                var upcoming = dataBlock.Data.FirstOrDefault(d => d.DateTime.DateTime > now && string.Equals(d.Icon.ToString(), dataBlock.Icon, StringComparison.InvariantCultureIgnoreCase));
 
                 var result = new Weather
                 {
