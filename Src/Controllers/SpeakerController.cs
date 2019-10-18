@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Src.Features.Speaker;
 
 namespace Src.Controllers
@@ -17,8 +18,18 @@ namespace Src.Controllers
         }
 
         [HttpPost, Route("announce")]
-        public async Task<IActionResult> Announce([FromBody] SpeakSonos.Command command)
+        public async Task<IActionResult> Announce([FromBody] object request)
         {
+            SpeakSonos.Command command;
+            if (request is string)
+            {
+                command = JsonConvert.DeserializeObject<SpeakSonos.Command>(request.ToString());
+            }
+            else
+            {
+                command = request as SpeakSonos.Command;
+            }
+
             if (command is null)
             {
                 throw new ArgumentNullException(nameof(command));

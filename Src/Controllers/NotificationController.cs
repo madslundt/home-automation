@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Src.Features.PushNotification;
 using System;
 using System.Threading.Tasks;
@@ -17,8 +18,18 @@ namespace Src.Controllers
         }
 
         [HttpPost, Route("send-telegram-notification")]
-        public async Task<IActionResult> SendTelegramNotification([FromBody] SendTelegramMessage.Command command)
+        public async Task<IActionResult> SendTelegramNotification([FromBody] object request)
         {
+            SendTelegramMessage.Command command;
+            if (request is string)
+            {
+                command = JsonConvert.DeserializeObject<SendTelegramMessage.Command>(request.ToString());
+            }
+            else
+            {
+                command = request as SendTelegramMessage.Command;
+            }
+
             if (command is null)
             {
                 throw new ArgumentNullException(nameof(command));
