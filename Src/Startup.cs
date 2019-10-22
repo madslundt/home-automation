@@ -66,6 +66,7 @@ namespace Src
 
             services.ConfigureAndValidate<WeatherOptions>(Configuration);
             services.ConfigureAndValidate<SonosOptions>(Configuration);
+            services.ConfigureAndValidate<CastOptions>(Configuration);
             services.ConfigureAndValidate<NotificationOptions>(Configuration);
 
             services.AddMvc(opt => { opt.Filters.Add(typeof(ExceptionFilter)); })

@@ -17,8 +17,8 @@ namespace Src.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost, Route("announce")]
-        public async Task<IActionResult> Announce([FromBody] object request)
+        [HttpPost, Route("announce-sonos")]
+        public async Task<IActionResult> AnnounceSonos([FromBody] object request)
         {
             SpeakSonos.Command command;
             if (request is string)
@@ -28,6 +28,29 @@ namespace Src.Controllers
             else
             {
                 command = request as SpeakSonos.Command;
+            }
+
+            if (command is null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPost, Route("announce-cast")]
+        public async Task<IActionResult> AnnounceCast([FromBody] object request)
+        {
+            SpeakCast.Command command;
+            if (request is string)
+            {
+                command = JsonConvert.DeserializeObject<SpeakCast.Command>(request.ToString());
+            }
+            else
+            {
+                command = request as SpeakCast.Command;
             }
 
             if (command is null)
