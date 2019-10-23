@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Src.Features.Speaker;
 
 namespace Src.Controllers
@@ -27,7 +28,7 @@ namespace Src.Controllers
             }
             else
             {
-                command = request as SpeakSonos.Command;
+                command = (request as JObject).ToObject<SpeakSonos.Command>();
             }
 
             if (command is null)
@@ -50,7 +51,7 @@ namespace Src.Controllers
             }
             else
             {
-                command = request as SpeakCast.Command;
+                command = (request as JObject).ToObject<SpeakCast.Command>();
             }
 
             if (command is null)

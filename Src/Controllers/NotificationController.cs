@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Src.Features.PushNotification;
 using System;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Src.Controllers
             }
             else
             {
-                command = request as SendTelegramMessage.Command;
+                command = (request as JObject).ToObject<SendTelegramMessage.Command>();
             }
 
             if (command is null)
