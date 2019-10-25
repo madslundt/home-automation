@@ -2,6 +2,7 @@ version: "3"
 services:
     api:
         build: .
+        restart: always
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
         ports:
@@ -10,6 +11,7 @@ services:
             - sonosApi
     sonosApi:
         image: "chrisns/docker-node-sonos-http-api"
+        restart: always
         network_mode: "host"
         volumes:
             - ./sonosApi/settings:/app/settings
@@ -18,4 +20,5 @@ services:
             - ./sonosApi/clips:/app/static/clips
     castApi:
         image: "breadlysm/cast-web-api"
+        restart: always
         network_mode: "host"
